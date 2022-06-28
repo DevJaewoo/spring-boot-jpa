@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Repository
@@ -108,5 +109,13 @@ public class OrderRepository {
         TypedQuery<Order> query = em.createQuery(cq).setMaxResults(1000); //최대 1000건
 
         return query.getResultList();
+    }
+
+    public List<Order> findAllWithMemberAndDelivery() {
+        String jpql = "select o from Order o " +
+                "join fetch o.member m " +
+                "join fetch o.delivery d";
+
+        return em.createQuery(jpql, Order.class).getResultList();
     }
 }
