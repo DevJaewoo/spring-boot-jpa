@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Repository
@@ -111,9 +112,19 @@ public class OrderRepository {
     }
 
     public List<Order> findAllWithMemberAndDelivery() {
-        String jpql = "select o from Order o " +
-                "join fetch o.member m " +
-                "join fetch o.delivery d";
+        String jpql = "select o from Order o" +
+                " join fetch o.member m" +
+                " join fetch o.delivery d";
+
+        return em.createQuery(jpql, Order.class).getResultList();
+    }
+
+    public List<Order> findAllWithItem() {
+        String jpql = "select distinct o from Order o" +
+                " join fetch o.member m" +
+                " join fetch o.delivery d" +
+                " join fetch o.orderItems oi" +
+                " join fetch oi.item i";
 
         return em.createQuery(jpql, Order.class).getResultList();
     }

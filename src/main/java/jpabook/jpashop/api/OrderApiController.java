@@ -45,6 +45,13 @@ public class OrderApiController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/api/v3/orders")
+    public List<OrderDTO> readOrdersV3() {
+        return orderRepository.findAllWithItem().stream()
+                .map(OrderDTO::new)
+                .collect(Collectors.toList());
+    }
+
     @Data
     @AllArgsConstructor
     static class OrderDTO {
