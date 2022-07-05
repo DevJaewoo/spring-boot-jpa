@@ -33,12 +33,12 @@ public class MemberService {
     }
 
     public Member findByID(Long id) {
-        return memberRepository.findByID(id);
+        return memberRepository.findById(id).orElse(null);
     }
 
     @Transactional
     public void update(Long id, String name) {
-        Member member = memberRepository.findByID(id);
+        Member member = memberRepository.findById(id).orElse(null);
         member.setName(name);
     }
 }
